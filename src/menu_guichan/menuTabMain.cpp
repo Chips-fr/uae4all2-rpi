@@ -276,7 +276,7 @@ public:
 MemorySliderActionListener* memorySliderActionListener;
 
 
-#if defined(PANDORA) && !(defined(AROS) || defined(WIN32))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
 class PandSpeedActionListener : public gcn::ActionListener
 {
 public:
@@ -583,7 +583,7 @@ void menuTabMain_Init()
     window_memory->setSize(287,160);
     window_memory->setBaseColor(baseCol);
 
-#if defined(PANDORA) && !(defined(AROS) || defined(WIN32))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     // Pandora CPU speed
     label_pandspeed = new gcn::Label("Pandora MHz");
     label_pandspeed->setPosition(4, 2);
@@ -617,7 +617,7 @@ void menuTabMain_Init()
     tab_main->add(textField_kickrom);
     tab_main->add(group_cpuspeed);
     tab_main->add(window_memory);
-#if defined(PANDORA) && !(defined(AROS) || defined(WIN32))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     tab_main->add(backgrd_pandspeed);
     tab_main->add(dropDown_pandspeed);
 #endif
@@ -680,7 +680,7 @@ void menuTabMain_Exit()
     delete slider_slowmem;
     delete slider_fastmem;
 
-#if defined(PANDORA) && !(defined(AROS) || defined(WIN32))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32)  || defined (RASPBERRY))
     delete backgrd_pandspeed;
     delete label_pandspeed;
     delete dropDown_pandspeed;
@@ -692,7 +692,7 @@ void menuTabMain_Exit()
     delete kickstartButtonActionListener;
     delete cpuSpeedButtonActionListener;
     delete memorySliderActionListener;
-#if defined(PANDORA) && !(defined(AROS) || defined(WIN32))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     delete pandSpeedActionListener;
 #endif
 }
@@ -765,7 +765,7 @@ void show_settings_TabMain()
     label_slowsize->setCaption(SlowMem_list[mainMenu_slowMemory]);
     label_fastsize->setCaption(FastMem_list[mainMenu_fastMemory]);
 
-#if defined(PANDORA) && !(defined(AROS) || defined(WIN32))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     if(dropDown_pandspeed->getSelected() != (mainMenu_cpuSpeed - 500) / 20)
         dropDown_pandspeed->setSelected((mainMenu_cpuSpeed - 500) / 20);
 #endif
