@@ -54,7 +54,8 @@ gcn::Window *group_chipset;
 gcn::UaeRadioButton* radioButton_chipsetocs;
 gcn::UaeRadioButton* radioButton_chipsetecs;
 gcn::UaeRadioButton* radioButton_chipsetaga;
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+// Why not activate it by default for everyone ?
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
 gcn::Container* backgrd_blittermode;
 gcn::Label* label_blittermode;
 gcn::UaeDropDown* dropDown_blittermode;
@@ -128,7 +129,7 @@ public:
 PandSpeedListModel pandSpeedList;
 #endif
 
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
 class BlitterModeListModel : public gcn::ListModel
 {
 private:
@@ -186,7 +187,7 @@ class BlitterModeActionListener : public gcn::ActionListener
 {
 public:
     void action(const gcn::ActionEvent& actionEvent) {
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
         if (actionEvent.getSource() == dropDown_blittermode)
             switch(dropDown_blittermode->getSelected()) {
             case 1:
@@ -348,7 +349,7 @@ void menuTabMain_Init()
     group_chipset->setBaseColor(baseCol);
 
     // Select Blitter mode
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
     label_blittermode = new gcn::Label("Blitter mode");
     label_blittermode->setPosition(4, 2);
     backgrd_blittermode = new gcn::Container();
@@ -606,7 +607,7 @@ void menuTabMain_Init()
     tab_main->add(icon_winlogo);
     tab_main->add(group_cpu);
     tab_main->add(group_chipset);
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
     tab_main->add(backgrd_blittermode);
     tab_main->add(dropDown_blittermode);
 #else
@@ -636,7 +637,7 @@ void menuTabMain_Exit()
     delete radioButton_chipsetocs;
     delete radioButton_chipsetecs;
     delete radioButton_chipsetaga;
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
     delete backgrd_blittermode;
     delete label_blittermode;
     delete dropDown_blittermode;
@@ -711,7 +712,7 @@ void show_settings_TabMain()
         radioButton_chipsetecs->setSelected(true);
     else if ((mainMenu_chipset & 0xff) == 2)
         radioButton_chipsetaga->setSelected(true);
-#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS))
+#if !(defined (ANDROIDSDL) || defined (WIN32) || defined (AROS) || defined (RASPBERRY))
     if (mainMenu_chipset & 0x100)
         dropDown_blittermode->setSelected(1);
     else if (mainMenu_chipset & 0x200)
