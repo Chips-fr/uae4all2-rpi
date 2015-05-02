@@ -1794,7 +1794,14 @@ void init_row_map (void)
   int i;
 
 	gfx_mem = (char *)prSDLScreen->pixels;
+#ifdef RASPBERRY
+	// When using DispmanX display resolution is not set to emulated one.
+	//gfx_rowbytes = visibleAreaWidth * 2;
+#else
+
+	
 	gfx_rowbytes = prSDLScreen->pitch;
+#endif
   for (i = 0; i < gfxHeight + 1; i++)
 		row_map[i] = gfx_mem + gfx_rowbytes * i;
 }
@@ -2288,6 +2295,11 @@ static _INLINE_ void finish_drawing_frame (void)
 	do_flush_screen ();
 }
 
+#ifdef RASPBERRY
+int wait_for_vsync = 1;
+extern uae_sem_t vsync_wait_sem;
+#endif
+
 void vsync_handle_redraw (int long_frame, int lof_changed)
 {
 	if(gfx_mem != (char *)prSDLScreen->pixels)
@@ -2297,13 +2309,29 @@ void vsync_handle_redraw (int long_frame, int lof_changed)
 	}
 
 	last_redraw_point++;
+
+#ifdef RASPBERRY
+	// To improve
+	if (wait_for_vsync == 1) {
+		uae_sem_wait (&vsync_wait_sem);
+	}
 	count_frame ();
+	wait_for_vsync = 0;
+#else
+	count_frame ();
+#endif
+
 	if (lof_changed || ! interlace_seen || last_redraw_point >= 2 || long_frame) {
 		last_redraw_point = 0;
 		interlace_seen = 0;
       
 		if (framecnt == 0)
+		{
+#ifdef RASPBERRY
+			wait_for_vsync = 1;
+#endif
 			finish_drawing_frame ();
+		}
 		
 		/* At this point, we have finished both the hardware and the
 		 * drawing frame. Essentially, we are outside of all loops and

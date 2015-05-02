@@ -301,6 +301,87 @@ void UpdateChipsetSettings()
     }
 }
 
+void check_presetModeId()
+{
+    int newPresetModeId = -1;
+
+    if (visibleAreaWidth==320 && mainMenu_displayedLines == 200)
+        newPresetModeId=0;
+    else if (visibleAreaWidth==320 && mainMenu_displayedLines == 216)
+        newPresetModeId=1;
+    else if (visibleAreaWidth==320 && mainMenu_displayedLines == 240)
+        newPresetModeId=2;
+    else if (visibleAreaWidth==320 && mainMenu_displayedLines == 256)
+        newPresetModeId=3;
+    else if (visibleAreaWidth==320 && mainMenu_displayedLines == 262)
+        newPresetModeId=4;
+    else if (visibleAreaWidth==320 && mainMenu_displayedLines == 270)
+        newPresetModeId=5;
+    else if (visibleAreaWidth==640 && mainMenu_displayedLines == 200)
+        newPresetModeId=10;
+    else if (visibleAreaWidth==640 && mainMenu_displayedLines == 216)
+        newPresetModeId=11;
+    else if (visibleAreaWidth==640 && mainMenu_displayedLines == 240)
+        newPresetModeId=12;
+    else if (visibleAreaWidth==640 && mainMenu_displayedLines == 256)
+        newPresetModeId=13;
+    else if (visibleAreaWidth==640 && mainMenu_displayedLines == 262)
+        newPresetModeId=14;
+    else if (visibleAreaWidth==640 && mainMenu_displayedLines == 270)
+        newPresetModeId=15;
+    else if (visibleAreaWidth==352 && mainMenu_displayedLines == 200)
+        newPresetModeId=20;
+    else if (visibleAreaWidth==352 && mainMenu_displayedLines == 216)
+        newPresetModeId=21;
+    else if (visibleAreaWidth==352 && mainMenu_displayedLines == 240)
+        newPresetModeId=22;
+    else if (visibleAreaWidth==352 && mainMenu_displayedLines == 256)
+        newPresetModeId=23;
+    else if (visibleAreaWidth==352 && mainMenu_displayedLines == 262)
+        newPresetModeId=24;
+    else if (visibleAreaWidth==352 && mainMenu_displayedLines == 270)
+        newPresetModeId=25;
+    else if (visibleAreaWidth==704 && mainMenu_displayedLines == 200)
+        newPresetModeId=30;
+    else if (visibleAreaWidth==704 && mainMenu_displayedLines == 216)
+        newPresetModeId=31;
+    else if (visibleAreaWidth==704 && mainMenu_displayedLines == 240)
+        newPresetModeId=32;
+    else if (visibleAreaWidth==704 && mainMenu_displayedLines == 256)
+        newPresetModeId=33;
+    else if (visibleAreaWidth==704 && mainMenu_displayedLines == 262)
+        newPresetModeId=34;
+    else if (visibleAreaWidth==704 && mainMenu_displayedLines == 270)
+        newPresetModeId=35;
+    else if (visibleAreaWidth==384 && mainMenu_displayedLines == 200)
+        newPresetModeId=40;
+    else if (visibleAreaWidth==384 && mainMenu_displayedLines == 216)
+        newPresetModeId=41;
+    else if (visibleAreaWidth==384 && mainMenu_displayedLines == 240)
+        newPresetModeId=42;
+    else if (visibleAreaWidth==384 && mainMenu_displayedLines == 256)
+        newPresetModeId=43;
+    else if (visibleAreaWidth==384 && mainMenu_displayedLines == 262)
+        newPresetModeId=44;
+    else if (visibleAreaWidth==384 && mainMenu_displayedLines == 270)
+        newPresetModeId=45;
+    else if (visibleAreaWidth==768 && mainMenu_displayedLines == 200)
+        newPresetModeId=50;
+    else if (visibleAreaWidth==768 && mainMenu_displayedLines == 216)
+        newPresetModeId=51;
+    else if (visibleAreaWidth==768 && mainMenu_displayedLines == 240)
+        newPresetModeId=52;
+    else if (visibleAreaWidth==768 && mainMenu_displayedLines == 256)
+        newPresetModeId=53;
+    else if (visibleAreaWidth==768 && mainMenu_displayedLines == 262)
+        newPresetModeId=54;
+    else if (visibleAreaWidth==768 && mainMenu_displayedLines == 270)
+        newPresetModeId=55;
+
+    if(newPresetModeId >= 0)
+        SetPresetMode(newPresetModeId);
+}
+
 
 void SetPresetMode(int mode)
 {

@@ -145,10 +145,24 @@ void read_joystick(int nr, unsigned int *dir, int *button)
 	else if (!triggerR /*R+dpad = arrow keys*/ && !(mainMenu_customControls && !mainMenu_custom_dpad))
 	{
 #ifndef AROS
-		if (dpadRight || SDL_JoystickGetAxis(joy, 0) > 0) right=1;
-		if (dpadLeft || SDL_JoystickGetAxis(joy, 0) < 0) left=1;
-		if (dpadUp || SDL_JoystickGetAxis(joy, 1) < 0) top=1;
-		if (dpadDown || SDL_JoystickGetAxis(joy, 1) > 0) bot=1;
+		int hat=SDL_JoystickGetHat(joy,0);
+
+
+		if ((hat & SDL_HAT_RIGHT) || dpadRight || SDL_JoystickGetAxis(joy, 0) > 0) right=1;
+		if ((hat & SDL_HAT_LEFT)  || dpadLeft  || SDL_JoystickGetAxis(joy, 0) < 0) left=1;
+		if ((hat & SDL_HAT_UP)    || dpadUp    || SDL_JoystickGetAxis(joy, 1) < 0) top=1;
+		if ((hat & SDL_HAT_DOWN)  || dpadDown  || SDL_JoystickGetAxis(joy, 1) > 0) bot=1;
+
+
+// Workaround for PS3 joystick
+// Ideally we would need a menu to customize such shitty joystick.
+#ifdef SIX_AXIS_WORKAROUND
+		if (SDL_JoystickGetButton(joy, 4))   top=1;
+		if (SDL_JoystickGetButton(joy, 5))   right=1;
+		if (SDL_JoystickGetButton(joy, 6))   bot=1;
+		if (SDL_JoystickGetButton(joy, 7))   left=1;
+#endif
+
 #else
 		if (dpadRight) right=1;
 		if (dpadLeft) left=1;
@@ -240,6 +254,18 @@ void read_joystick(int nr, unsigned int *dir, int *button)
   	}
   	else
   	{
+#ifdef RASPBERRY
+		*button = (SDL_JoystickGetButton(joy, 0)) & 1;
+		*button |= ((SDL_JoystickGetButton(joy, 1)) & 1) << 1;
+
+#ifdef SIX_AXIS_WORKAROUND
+		*button |= (SDL_JoystickGetButton(joy, 13)) & 1;
+		*button |= ((SDL_JoystickGetButton(joy, 14)) & 1) << 1;
+#endif
+
+
+
+#else
 #if !(defined(ANDROIDSDL) || defined(AROS))
    		*button = ((mainMenu_button1==GP2X_BUTTON_B && buttonA) || (mainMenu_button1==GP2X_BUTTON_X && buttonX) || (mainMenu_button1==GP2X_BUTTON_Y && buttonY) || SDL_JoystickGetButton(joy, mainMenu_button1)) & 1;
 #else
@@ -250,6 +276,7 @@ void read_joystick(int nr, unsigned int *dir, int *button)
   		*button |= ((buttonB || SDL_JoystickGetButton(joy, mainMenu_button2)) & 1) << 1;
 #else
   		*button |= ((buttonB) & 1) << 1;
+#endif
 #endif
   	}
   }
@@ -311,9 +338,17 @@ void init_joystick(void)
     int i;
     nr_joysticks = SDL_NumJoysticks ();
     if (nr_joysticks > 0)
+    {
 		uae4all_joy0 = SDL_JoystickOpen (0);
+                printf("    Joystick%d : %s\n",i,SDL_JoystickName(0));
+		printf("        Buttons: %i Axis: %i Hats: %i\n",SDL_JoystickNumButtons(uae4all_joy0),SDL_JoystickNumAxes(uae4all_joy0),SDL_JoystickNumHats(uae4all_joy0));
+    }
     if (nr_joysticks > 1)
+    {
 		uae4all_joy1 = SDL_JoystickOpen (1);
+                printf("    Joystick%d : %s\n",i,SDL_JoystickName(1));
+		printf("        Buttons: %i Axis: %i Hats: %i\n",SDL_JoystickNumButtons(uae4all_joy1),SDL_JoystickNumAxes(uae4all_joy1),SDL_JoystickNumHats(uae4all_joy1));
+    }
     else
 		uae4all_joy1 = NULL; 
 /*    if (nr_joysticks > 2)

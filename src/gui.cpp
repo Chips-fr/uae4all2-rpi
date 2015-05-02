@@ -217,7 +217,10 @@ static void goMenu(void)
 #ifdef USE_UAE4ALL_VKBD
 	vkbd_quit();
 #endif	
+#ifndef RASPBERRY
+	// To be cleaned
 	pause_sound();
+#endif
 #ifdef USE_GUICHAN
 	running=true;
 	exitmode=run_mainMenuGuichan();
@@ -230,7 +233,10 @@ static void goMenu(void)
 	/* Clear menu garbage at the bottom of the screen */
 	black_screen_now();
 	notice_screen_contents_lost();
+#ifndef RASPBERRY
+	// To be cleaned
 	resume_sound();
+#endif
 #ifndef USE_GUICHAN
 	if ((!(strcmp(prefs_df[0],uae4all_image_file0))) || ((!(strcmp(prefs_df[1],uae4all_image_file1)))))
 		menu_unraise();
@@ -508,18 +514,39 @@ void gui_handle_events (void)
 	dpadRight = keystate[SDLK_RIGHT];
 	buttonA = keystate[SDLK_HOME];
 	buttonB = keystate[SDLK_END];
+#ifdef RASPBERRY
+// Why did it change ?
+	buttonX = keystate[SDLK_LSHIFT];
+#else
 	buttonX = keystate[SDLK_PAGEDOWN];
+#endif
 	buttonY = keystate[SDLK_PAGEUP];
 	triggerL = keystate[SDLK_RSHIFT];
 	triggerR = keystate[SDLK_RCTRL];
 	buttonSelect = keystate[SDLK_LCTRL];
 	buttonStart = keystate[SDLK_LALT];
 
+#ifdef RASPBERRY
+	// To be cleaned
+	if(keystate[SDLK_F11])
+	{
+		// Move pause and resume sound out of menu and especially out of dispmanx since it could takes some times...
+		pause_sound();
+		extern void graphics_dispmanshutdown(void);
+		extern void graphics_subinit (void);
+		graphics_dispmanshutdown();
+		goMenu();
+		graphics_subinit ();
+		resume_sound();
+	}
+
+#else
 	if(keystate[SDLK_LCTRL])
 		goMenu();
 
 	if(keystate[SDLK_F12])
 		SDL_WM_ToggleFullScreen(prSDLScreen);
+#endif
 
 #ifdef ANDROIDSDL
 

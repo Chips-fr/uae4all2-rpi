@@ -433,10 +433,10 @@ void graphics_subinit (void)
 									dispmanxdinfo.width - (dispmanxdinfo.width * 4)/100 ,
 									dispmanxdinfo.height - (dispmanxdinfo.height * 7)/100 );
 			// For debug
-			vc_dispmanx_rect_set( &dst_rect, (dispmanxdinfo.width /2),
-		                             (dispmanxdinfo.height * 3)/100 ,
-		                             (dispmanxdinfo.width - (dispmanxdinfo.width * 6)/100 )/2,
-		                             (dispmanxdinfo.height - (dispmanxdinfo.height * 7)/100 )/2);
+			//vc_dispmanx_rect_set( &dst_rect, (dispmanxdinfo.width /2),
+		        //                     (dispmanxdinfo.height * 3)/100 ,
+		        //                     (dispmanxdinfo.width - (dispmanxdinfo.width * 6)/100 )/2,
+		        //                     (dispmanxdinfo.height - (dispmanxdinfo.height * 7)/100 )/2);
 
 		}
 		else
@@ -722,7 +722,7 @@ int keycode2amiga(SDL_keysym *prKeySym)
 {
     int iAmigaKeycode = kc_decode(prKeySym);
     if (iAmigaKeycode == -1)
-            return decode_fr(prKeySym);
+            return decode_us(prKeySym);
     return iAmigaKeycode;
 }
 

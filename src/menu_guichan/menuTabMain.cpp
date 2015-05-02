@@ -77,7 +77,7 @@ gcn::Window *group_cpuspeed;
 gcn::UaeRadioButton* radioButton_cpuspeed_7Mhz;
 gcn::UaeRadioButton* radioButton_cpuspeed_14Mhz;
 gcn::UaeRadioButton* radioButton_cpuspeed_28Mhz;
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
 gcn::UaeRadioButton* radioButton_cpuspeed_56Mhz;
 gcn::UaeRadioButton* radioButton_cpuspeed_112Mhz;
 #endif
@@ -244,7 +244,7 @@ public:
             mainMenu_CPU_speed=1;
         else if (actionEvent.getSource() == radioButton_cpuspeed_28Mhz)
             mainMenu_CPU_speed=2;
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
         else if (actionEvent.getSource() == radioButton_cpuspeed_56Mhz)
             mainMenu_CPU_speed=3;
         else if (actionEvent.getSource() == radioButton_cpuspeed_112Mhz)
@@ -457,7 +457,7 @@ void menuTabMain_Init()
     radioButton_cpuspeed_28Mhz = new gcn::UaeRadioButton("28MHz", "radiocpuspeedgroup");
     radioButton_cpuspeed_28Mhz->setPosition(5,70);
     radioButton_cpuspeed_28Mhz->setId("28MHz");
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
     radioButton_cpuspeed_56Mhz = new gcn::UaeRadioButton("56MHz", "radiocpuspeedgroup");
     radioButton_cpuspeed_56Mhz->setPosition(5,100);
     radioButton_cpuspeed_56Mhz->setId("56MHz");
@@ -476,7 +476,7 @@ void menuTabMain_Init()
     radioButton_cpuspeed_7Mhz->addActionListener(cpuSpeedButtonActionListener);
     radioButton_cpuspeed_14Mhz->addActionListener(cpuSpeedButtonActionListener);
     radioButton_cpuspeed_28Mhz->addActionListener(cpuSpeedButtonActionListener);
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
     radioButton_cpuspeed_56Mhz->addActionListener(cpuSpeedButtonActionListener);
     radioButton_cpuspeed_112Mhz->addActionListener(cpuSpeedButtonActionListener);
 #endif
@@ -486,7 +486,7 @@ void menuTabMain_Init()
     group_cpuspeed->add(radioButton_cpuspeed_14Mhz);
     group_cpuspeed->add(radioButton_cpuspeed_28Mhz);
     group_cpuspeed->setMovable(false);
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
     group_cpuspeed->add(radioButton_cpuspeed_56Mhz);
     group_cpuspeed->add(radioButton_cpuspeed_112Mhz);
     group_cpuspeed->setSize(87,175);
@@ -659,7 +659,7 @@ void menuTabMain_Exit()
     delete radioButton_cpuspeed_7Mhz;
     delete radioButton_cpuspeed_14Mhz;
     delete radioButton_cpuspeed_28Mhz;
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
     delete radioButton_cpuspeed_56Mhz;
     delete radioButton_cpuspeed_112Mhz;
 #endif
@@ -745,7 +745,7 @@ void show_settings_TabMain()
         radioButton_cpuspeed_14Mhz->setSelected(true);
     else if (mainMenu_CPU_speed==2)
         radioButton_cpuspeed_28Mhz->setSelected(true);
-#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL)
+#if defined(AROS) || defined(WIN32) || defined(ANDROIDSDL) || defined(RASPBERRY)
     else if (mainMenu_CPU_speed==3)
         radioButton_cpuspeed_56Mhz->setSelected(true);
     else if (mainMenu_CPU_speed==4)

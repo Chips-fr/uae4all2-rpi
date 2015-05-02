@@ -147,7 +147,14 @@ void init()
     setenv("SDL_OMAP_BORDER_CUT",bordercut,1);
 #endif
 #endif
+
+    #ifdef RASPBERRY
+    const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo ();
+    printf("Res: %d x %d %d bpp\n",videoInfo->current_w, videoInfo->current_h, videoInfo->vfmt->BitsPerPixel);
+    screen = SDL_SetVideoMode(videoInfo->current_w,videoInfo->current_h,16,SDL_SWSURFACE);
+    #else
     screen = SDL_SetVideoMode(GUI_WIDTH, GUI_HEIGHT, 16, SDL_SWSURFACE);
+    #endif
     SDL_EnableUNICODE(1);
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
@@ -582,7 +589,14 @@ void init()
     baseColLabel.a = 192;
 
     top = new gcn::Container();
+
+#ifdef RASPBERRY
+    const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo ();
+    //printf("Res: %d x %d %d bpp\n",videoInfo->current_w, videoInfo->current_h, videoInfo->vfmt->BitsPerPixel);
+    top->setDimension(gcn::Rectangle((videoInfo->current_w - GUI_WIDTH)/2, (videoInfo->current_h - GUI_HEIGHT)/2, GUI_WIDTH, GUI_HEIGHT));
+#else
     top->setDimension(gcn::Rectangle(0, 0, GUI_WIDTH, GUI_HEIGHT));
+#endif
     top->setBaseColor(baseCol);
     globals::gui->setTop(top);
 

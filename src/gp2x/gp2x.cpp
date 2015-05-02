@@ -103,8 +103,7 @@ unsigned long gp2x_joystick_read(int allow_usb_joy)
 	return value;
 }
 
-
-void gp2x_init(int argc, char **argv)
+void gp2x_init()
 {
 	unsigned long memdev;
 #ifndef AROS

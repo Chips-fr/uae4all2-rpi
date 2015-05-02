@@ -203,6 +203,110 @@ void leave_program (void)
     do_leave_program ();
 }
 
+
+
+#if 1
+extern unsigned int sound_rate;
+void check_presetModeId();
+
+typedef struct _cmdline_opt
+{
+	char *optname;
+	char *description;
+	int len;
+	void *opt;
+} cmdline_opt;
+
+static cmdline_opt cmdl_opts[] =
+{
+	{ "-drives"         , "   number of drives"       ,0,                           &mainMenu_drives    },
+	{ "-df0"            , "      <adf filename>"      ,sizeof(uae4all_image_file0), uae4all_image_file0 },
+	{ "-df1"            , "      <adf filename>"      ,sizeof(uae4all_image_file1), uae4all_image_file1 },
+	{ "-df2"            , "      <adf filename>"      ,sizeof(uae4all_image_file2), uae4all_image_file2 },
+	{ "-df3"            , "      <adf filename>"      ,sizeof(uae4all_image_file2), uae4all_image_file3 },
+	{ "-kick"           , "     <kickstart filename>" ,sizeof(romfile),             romfile             },
+	{ "-cpu"            , "      0:68000 1:68020"     ,0,                           &mainMenu_CPU_model },
+	{ "-clock"          , "    0:7Mhz 1:14Mhz 2:28Mhz",0,                           &mainMenu_CPU_speed },
+	{ "-chipset"        , "  0:OCS  1:ECS  2:AGA"     ,0,                           &mainMenu_chipset   },
+
+	{ "-chipmem"        , "  0:512K 1:1M   2:2M 3:4M 4:8M",0,                           &mainMenu_chipMemory   },
+	{ "-slowmem"        , "  0:Off  1:512K 2:1M 3:15M"    ,0,                           &mainMenu_slowMemory   },
+	{ "-fastmem"        , "  0:Off  1:1M   2:2M 3:4M 4:8M",0,                           &mainMenu_fastMemory   },
+
+
+	{ "-hdmode"         , "   0:Off 1:HDDir 2:HDFile" ,0,               &mainMenu_bootHD},
+
+	{ "-hdfile"         , "   <HD Filename>"          ,sizeof(uae4all_hard_file),   &uae4all_hard_file},
+
+	{ "-statusln"       , " 0:Off 1:On"               ,0,               &mainMenu_showStatus},
+	{ "-sound"          , "    0:Off 1:Fast 2:Accurate",0,              &mainMenu_sound     },
+	{ "-soundrate"      , "8000,11025,22050,32000 or 44100",0,          &sound_rate          },
+	{ "-autosave"       , ""                         ,0,                &mainMenu_autosave         },
+	{ "-frameskip"      , "number of frameskip "     ,0,                &mainMenu_frameskip        },
+
+	{ "-width"          , "    emulation screen width",0,                &visibleAreaWidth        },
+	{ "-height"         , "   emulation screen height",0,                &mainMenu_displayedLines        },
+
+#ifdef ANDROIDSDL
+	{ "-onscreen"       , ""                         ,0,                &mainMenu_onScreen         },
+#endif
+	{ "-ntsc"           , "     0:Pal :Ntsc"         ,0,                &mainMenu_ntsc             },
+	{ "-joyconf"        , ""                         ,0,                &mainMenu_joyConf          },
+	{ "-use1mbchip"     , ""                         ,0,                &mainMenu_chipMemory       },
+	{ "-autofire"       , ""                         ,0,                &mainMenu_autofire         },
+	{ "-script"         , ""                         ,0,                &mainMenu_enableScripts    },
+	{ "-screenshot"     , ""                         ,0,                &mainMenu_enableScreenshots},
+//	{ "-mousemultiplier", ""                         ,0,                &mainMenu_mouseMultiplier  },
+//	{ "-skipintro"      , ""                         ,0,                &skipintro                 },
+//	{ "-systemclock"    , ""                         ,0,                &mainMenu_throttle         },
+//	{ "-syncthreshold"  , ""                         ,0,                &timeslice_mode            },
+};
+
+
+void parse_cmdline(int argc, char **argv)
+{
+	int arg, i, found;
+	printf("Uae4all2 0.5 by Chips for Raspberry Pi\n\n");
+
+	for (arg = 1; arg < argc; arg++)
+	{
+		for (i = found = 0; i < sizeof(cmdl_opts) / sizeof(cmdl_opts[0]); i++)
+		{
+			if (strcmp(argv[arg], cmdl_opts[i].optname) == 0)
+			{
+				arg++;
+				if (cmdl_opts[i].len == 0)
+					*(int *)(cmdl_opts[i].opt) = atoi(argv[arg]);
+				else
+				{
+					strncpy((char *)cmdl_opts[i].opt, argv[arg], cmdl_opts[i].len);
+					((char *)cmdl_opts[i].opt)[cmdl_opts[i].len-1] = 0;
+				}
+				found = 1;
+				break;
+			}
+		}
+		//if (!found) printf("skipping unknown option: \"%s\"\n", argv[arg]);
+		if (!found)
+		{
+			int j;
+			printf("unknown option: \"%s\"\n", argv[arg]);
+			printf("Available options:\n");
+			for (j = 0; j < sizeof(cmdl_opts) / sizeof(cmdl_opts[0]); j++)
+			{
+				printf("     %s %s\n", cmdl_opts[j], cmdl_opts[j].description);
+			}
+			exit (0);
+		}
+	}
+	// Ensure preset mode is set according to width & height.
+	check_presetModeId();
+}
+#endif
+
+
+
+
 void real_main (int argc, char **argv)
 {
 #ifdef USE_SDL
@@ -220,11 +324,13 @@ void real_main (int argc, char **argv)
     /* PocketUAE prefs */
     default_prefs_uae (&currprefs);
     default_prefs();
+
+    // Set everthing to default and clear HD settings
+    SetDefaultMenuSettings(1);
 #ifdef GP2X
-    gp2x_init(argc, argv);
+    gp2x_init();
 #endif
-		// Set everthing to default and clear HD settings
-		SetDefaultMenuSettings(1);
+    parse_cmdline(argc, argv);
     loadconfig (1);
 
     if (! graphics_setup ()) {
