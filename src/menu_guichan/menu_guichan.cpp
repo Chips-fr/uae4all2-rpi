@@ -151,7 +151,7 @@ void init()
     #ifdef RASPBERRY
     const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo ();
     printf("Res: %d x %d %d bpp\n",videoInfo->current_w, videoInfo->current_h, videoInfo->vfmt->BitsPerPixel);
-    screen = SDL_SetVideoMode(videoInfo->current_w,videoInfo->current_h,16,SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(videoInfo->current_w,videoInfo->current_h,16,SDL_SWSURFACE | SDL_FULLSCREEN);
     #else
     screen = SDL_SetVideoMode(GUI_WIDTH, GUI_HEIGHT, 16, SDL_SWSURFACE);
     #endif
