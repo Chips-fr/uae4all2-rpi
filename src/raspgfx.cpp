@@ -978,20 +978,20 @@ void handle_events (void)
 			}
 			else
 			{
-				int mouseScale = mainMenu_mouseMultiplier * 4;
+				int mouseScale = mainMenu_mouseMultiplier;
 				if (mouseScale > 99)
 					mouseScale /= 100;
 
 				lastmx += rEvent.motion.xrel * mouseScale;
 				lastmy += rEvent.motion.yrel * mouseScale;
 				if(rEvent.motion.x == 0)
-					lastmx -= mouseScale * 4;
+					lastmx -= mouseScale;
 				if(rEvent.motion.y == 0)
-					lastmy -= mouseScale * 4;
+					lastmy -= mouseScale;
 				if(rEvent.motion.x == visibleAreaWidth-1)
-					lastmx += mouseScale * 4;
+					lastmx += mouseScale;
 				if(rEvent.motion.y == mainMenu_displayedLines-1)
-					lastmy += mouseScale * 4;
+					lastmy += mouseScale;
 			}
 			newmousecounters = 1;
 			break;
