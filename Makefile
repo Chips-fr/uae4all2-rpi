@@ -12,7 +12,7 @@ PROG   = uae4all
 O      = o
 RM     = rm -f
 STRIP  = strip
-CXX    = g++-4.8
+#CXX    = g++-4.8
 
 all: $(PROG)
 
