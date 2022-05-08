@@ -811,7 +811,7 @@ int create_configfilename(char *dest, char *basename, int fromDir)
     p++;
     if(fromDir == 0) {
         int len = strlen(p) + 1;
-        char filename[len];
+        char filename[len+1];
         strcpy(filename, p);
         char *pch = &filename[len];
         while (pch != filename && *pch != '.')
@@ -1323,7 +1323,7 @@ void loadconfig(int general)
         memset(filebuffer, 0, 256);
         fscanf(f,"custom_kickrom=%s\n",&filebuffer);
         replace(filebuffer,' ','|');
-        if (filebuffer[0]!=NULL) {
+        if (filebuffer[0]!=0) {
             strcpy(custom_kickrom, filebuffer);
         }
         fclose(f);

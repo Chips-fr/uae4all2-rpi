@@ -308,9 +308,9 @@ static int drive_insert (drive *drv, int dnum, const char *fname)
 	track_reset (drv);
 	return 0;
     }
-    strncpy ((char *)&prefs_df[dnum], fname, 255);
+    memmove ((char *)&prefs_df[dnum], fname, 255);
     prefs_df[dnum][255] = 0;
-    strncpy ((char *)&changed_df[dnum], fname, 255);
+    memmove ((char *)&changed_df[dnum], fname, 255);
     changed_df[dnum][255] = 0;
 
     memset (buffer, 0, sizeof (buffer));

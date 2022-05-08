@@ -35,10 +35,13 @@ MORE_CXXFLAGS += -DRASPBERRY -DSIX_AXIS_WORKAROUND
 MORE_CXXFLAGS += -DGP2X -DPANDORA
 MORE_CXXFLAGS += -DROM_PATH_PREFIX=\"./\" -DDATA_PREFIX=\"./data/\" -DSAVE_PREFIX=\"./saves/\"
 
+#MORE_CXXFLAGS += -fsanitize=address -fsanitize=bounds
+#LDFLAGS += -static-libasan -fsanitize=address -fsanitize=bounds
+
 
 ifndef DEBUG
 MORE_CXXFLAGS += -O3 -ffast-math
-MORE_CXXFLAGS += -fstrict-aliasing -mstructure-size-boundary=32
+MORE_CXXFLAGS += -fstrict-aliasing
 MORE_CXXFLAGS += -falign-functions=32
 MORE_CXXFLAGS += -finline -finline-functions -fno-builtin
 else

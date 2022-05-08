@@ -566,6 +566,7 @@ static int menuLoadLoop(char *curr_path)
 
     if(lastSelectedIndex >= 0 && lastSelectedIndex < dirList.getNumberOfElements())
         listBox->setSelected(lastSelectedIndex);
+    return 0;
 }
 
 
