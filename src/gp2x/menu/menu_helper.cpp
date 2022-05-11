@@ -138,7 +138,7 @@ void update_display()
 #if defined (RASPBERRY)
 	const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo ();
 	printf("Res: %d x %d %d bpp\n",videoInfo->current_w, videoInfo->current_h, videoInfo->vfmt->BitsPerPixel);
-	prSDLScreen = SDL_SetVideoMode(videoInfo->current_w,videoInfo->current_h,16,SDL_SWSURFACE);
+	prSDLScreen = SDL_SetVideoMode(videoInfo->current_w,videoInfo->current_h,16,SDL_SWSURFACE|SDL_FULLSCREEN);
 
 	//prSDLScreen = SDL_SetVideoMode(640, 480, 16, SDL_SWSURFACE);
 

@@ -21,7 +21,7 @@ NavigationMap navMap[] =
   { "68000", "ChipMem", "1.2", "tabbedArea", "68020" },
   { "68020", "ChipMem", "1.3", "68000", "OCS" },
   { "OCS", "FastMem", "3.1", "68020", "ECS" },
-#if defined(PANDORA) && !(defined(WIN32) || defined(AROS))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
   { "ECS", "PandSpeed", "AROS", "OCS", "AGA" },
   { "AGA", "PandSpeed", "BlitterMode", "ECS", "Reset" },
 #else
@@ -32,7 +32,7 @@ NavigationMap navMap[] =
   { "1.2", "68000", "7MHz", "tabbedArea", "1.3" },
   { "1.3", "68020", "14MHz", "1.2", "2.0" },
   { "2.0", "OCS", "28MHz", "1.3", "3.1" },
-#if defined(PANDORA) && !(defined(WIN32) || defined(AROS))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
   { "3.1", "OCS", "28MHz", "2.0", "AROS" },
   { "AROS", "ECS", "PandSpeed", "3.1", "BlitterMode" },
 #endif
@@ -44,7 +44,7 @@ NavigationMap navMap[] =
   
   { "7MHz", "1.2", "ChipMem", "tabbedArea", "14MHz" },
   { "14MHz", "1.3", "ChipMem", "7MHz", "28MHz" },
-#if defined(PANDORA) && !(defined(WIN32) || defined(AROS))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
   { "28MHz", "2.0", "SlowMem", "14MHz", "BlitterMode" },
   { "BlitterMode", "AGA", "PandSpeed", "---", "---" },
 #else
@@ -60,7 +60,7 @@ NavigationMap navMap[] =
 
   { "ChipMem", "---", "---", "tabbedArea", "SlowMem" },
   { "SlowMem", "---", "---", "ChipMem", "FastMem" },
-#if defined(PANDORA) && !(defined(WIN32) || defined(AROS))
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
   { "FastMem", "---", "---", "SlowMem", "PandSpeed" },
 #else
   { "FastMem", "---", "---", "SlowMem", "BM_normal" },

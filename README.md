@@ -28,9 +28,6 @@ Authors:
 Chui, john4p, TomB, notaz, Bernd Schneider, Toni Wilen, Pickle, smoku, AnotherGuest, Anonymous engineer, finkel, Lubomyr, pelya
 android port by Lubomyr, android libSDL by pelya 
 
-SDL keycode action:
-F15 textUI vkeybd
-LALT - change input method
+Use F12 in order to enter/exit menu.
 
-Please put kickstarts files kickstarts directory.
-Files must be named as kick13.rom kick20.rom kick31.rom
+Put kickstarts files in kickstarts directory. Files must be named as kick13.rom kick20.rom kick31.rom

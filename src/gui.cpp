@@ -528,7 +528,7 @@ void gui_handle_events (void)
 
 #ifdef RASPBERRY
 	// To be cleaned
-	if(keystate[SDLK_F11])
+	if(keystate[SDLK_F12])
 	{
 		// Move pause and resume sound out of menu and especially out of dispmanx since it could takes some times...
 		pause_sound();

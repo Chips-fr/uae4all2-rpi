@@ -59,6 +59,7 @@ gcn::UaeRadioButton* radioButton_mouseMultiplier_50;
 gcn::UaeRadioButton* radioButton_mouseMultiplier_1;
 gcn::UaeRadioButton* radioButton_mouseMultiplier_2;
 gcn::UaeRadioButton* radioButton_mouseMultiplier_4;
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
 gcn::Window *group_tapDelay;
 gcn::UaeRadioButton* radioButton_tapDelay_10;
 gcn::UaeRadioButton* radioButton_tapDelay_5;
@@ -66,8 +67,9 @@ gcn::UaeRadioButton* radioButton_tapDelay_2;
 gcn::Container* backgrd_offset;
 gcn::Label* label_offset;
 gcn::UaeDropDown* dropDown_offset;
+#endif
 
-
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
 class OffsetListModel : public gcn::ListModel
 {
 public:
@@ -104,6 +106,7 @@ public:
     }
 };
 OffsetListModel offsetList;
+#endif
 
 class SelConfigActionListener : public gcn::ActionListener
 {
@@ -186,7 +189,7 @@ public:
 };
 MouseMultActionListener* mouseMultActionListener;
 
-
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
 class TapDelayActionListener : public gcn::ActionListener
 {
 public:
@@ -209,7 +212,7 @@ public:
     }
 };
 OffsetActionListener* offsetActionListener;
-
+#endif
 
 void menuTabControl_Init()
 {
@@ -338,6 +341,7 @@ void menuTabControl_Init()
     group_mouseMultiplier->setSize(100,175);
     group_mouseMultiplier->setBaseColor(baseCol);
 
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     // Select Tap delay
     radioButton_tapDelay_10 = new gcn::UaeRadioButton("normal", "radiotapdelaygroup");
     radioButton_tapDelay_10->setPosition(5,10);
@@ -377,6 +381,7 @@ void menuTabControl_Init()
     dropDown_offset->setId("StylusOffset");
     offsetActionListener = new OffsetActionListener();
     dropDown_offset->addActionListener(offsetActionListener);
+#endif
 
     tab_control = new gcn::Container();
     tab_control->add(icon_winlogo);
@@ -385,9 +390,11 @@ void menuTabControl_Init()
     tab_control->add(checkBox_statusline);
     tab_control->add(group_autofirerate);
     tab_control->add(group_mouseMultiplier);
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     tab_control->add(group_tapDelay);
     tab_control->add(backgrd_offset);
     tab_control->add(dropDown_offset);
+#endif
     tab_control->setSize(600,280);
     tab_control->setBaseColor(baseCol);
 }
@@ -420,6 +427,7 @@ void menuTabControl_Exit()
     delete radioButton_mouseMultiplier_1;
     delete radioButton_mouseMultiplier_2;
     delete radioButton_mouseMultiplier_4;
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     delete group_tapDelay;
     delete radioButton_tapDelay_10;
     delete radioButton_tapDelay_5;
@@ -427,14 +435,17 @@ void menuTabControl_Exit()
     delete backgrd_offset;
     delete label_offset;
     delete dropDown_offset;
+#endif
 
     delete selConfigActionListener;
     delete joystickActionListener;
     delete statuslineActionListener;
     delete autofireActionListener;
     delete mouseMultActionListener;
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     delete tapDelayActionListener;
     delete offsetActionListener;
+#endif
 }
 
 
@@ -489,6 +500,7 @@ void show_settings_TabControl()
     else if (mainMenu_mouseMultiplier==4)
         radioButton_mouseMultiplier_4->setSelected(true);
 
+#if defined(PANDORA) && !(defined(AROS) || defined(WIN32) || defined (RASPBERRY))
     if (mainMenu_tapDelay==10)
         radioButton_tapDelay_10->setSelected(true);
     else if (mainMenu_tapDelay==5)
@@ -498,6 +510,7 @@ void show_settings_TabControl()
 
     if(dropDown_offset->getSelected() != mainMenu_stylusOffset / 2)
         dropDown_offset->setSelected(mainMenu_stylusOffset / 2);
+#endif
 }
 
 }

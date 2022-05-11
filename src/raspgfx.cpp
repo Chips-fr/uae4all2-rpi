@@ -35,6 +35,7 @@
 #include "inputmode.h"
 #include "menu_config.h"
 #include "menu.h"
+#include "debug_uae4all.h"
 #include "savestate.h"
 #include "bcm_host.h"
 #include "thread.h"
